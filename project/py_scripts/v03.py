@@ -6,6 +6,7 @@ from servo import Servo
 # create a PWM servo controller (16 - pin Pico)
 servo_pwm = PWM(Pin(16))
 
+
 # Set the parameters of the servo pulses, more details in the "Documentation" section
 freq = 50
 min_us = 500
