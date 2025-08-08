@@ -18,29 +18,29 @@ notes = {'C'  : octave * 262,
          'Bb' : octave * 466,
          'B'  : octave * 494,
          'Chi': octave * 523,
-         'rest':0, # zero Hertz is the same as no tone at all
-         }
+            'rest':0, # zero Hertz is the same as no tone at all
+        }
 
 # define a melody - two-dimensional list of notes and note-duration (ms)
 melody = [['E',    500],
-          ['D',    500],
-          ['C',   500],
-          ['rest', 500],
-          ['E',    500],
-          ['D',    500],
-          ['C',   500],
-          ['rest', 500],
-          ['G',    500],
-          ['F',    250],
-          ['F',    250],
-          ['E',    500],
-          ['rest', 500],
-          ['G',    500],
-          ['F',    250],
-          ['F',    250],
-          ['E',    500],
-          ['rest', 500],
-          ]
+            ['D',    500],
+            ['C',   500],
+            ['rest', 500],
+            ['E',    500],
+            ['D',    500],
+            ['C',   500],
+            ['rest', 500],
+            ['G',    500],
+            ['F',    250],
+            ['F',    250],
+            ['E',    500],
+            ['rest', 500],
+            ['G',    500],
+            ['F',    250],
+            ['F',    250],
+            ['E',    500],
+            ['rest', 500],
+            ]
 
 buzz = PiicoDev_Buzzer(volume=2)
 
