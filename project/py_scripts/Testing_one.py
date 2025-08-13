@@ -1,61 +1,49 @@
-from machine import Pin, PWM, RTC
+from machine import Pin, PWM
 from servo import Servo
-import time
 
-# Create PWM servo controllers for both wheels
-servo_pwm = PWM(Pin(16))  # Right wheel
-servo_pwm2 = PWM(Pin(15)) # Left wheel
-rtc = RTC()
+# Initialize servo instances
+l_servo = Servo(PWM(Pin(16)), min_us=500, max_us=2500, dead_zone_us=1500, freq=50)
+r_servo = Servo(PWM(Pin(15)), min_us=500, max_us=2500, dead_zone_us=1500, freq=50)
 
-# Servo parameters
-freq = 50
-min_us = 500
-max_us = 2500
-dead_zone_us = 1500
+class ServoMovement:
+    def __init__(self, l_servo, r_servo, forward, left, right, reverse, stop):
+        self.l_servo = l_servo
+        self.r_servo = r_servo
+        self._forward = forward
+        self._left = left
+        self._right = right
+        self._reverse = reverse
+        self._stop = stop
 
-# Create servo objects
-my_servo = Servo(pwm=servo_pwm, min_us=min_us, max_us=max_us, dead_zone_us=dead_zone_us, freq=freq)
-my_servo2 = Servo(pwm=servo_pwm2, min_us=min_us, max_us=max_us, dead_zone_us=dead_zone_us, freq=freq)
+    def move_forward(self):
+        self.l_servo.set_duty(self._forward[0])
+        self.r_servo.set_duty(self._forward[1])
 
-# State machine setup
-time_last_change = rtc.datetime()
-machine_state = 1
+    def turn_left(self):
+        self.l_servo.set_duty(self._left[0])
+        self.r_servo.set_duty(self._left[1])
 
-# Define states: duration in seconds and servo pulse width
-states = [
-    {"duration": 3, "position": 500},   # Slow turn
-    {"duration": 6, "position": 1000},  # Medium turn
-    {"duration": 9, "position": 1500},  # Neutral (stop)
-    {"duration": 12, "position": 2000}, # Fast turn
-]
+    def turn_right(self):
+        self.l_servo.set_duty(self._right[0])
+        self.r_servo.set_duty(self._right[1])
 
-while True:
-    time_now = rtc.datetime()
+    def move_reverse(self):
+        self.l_servo.set_duty(self._reverse[0])
+        self.r_servo.set_duty(self._reverse[1])
 
-    if machine_state == 1:
-        my_servo.set_duty(state_1_state)
-        my_servo2.set_duty(state_1_state)  # ← Added
-        if time_now[6] - time_last_change[6] >= state_1_time:
-            machine_state = 2
-            time_last_change = rtc.datetime()  # ← Also add this
-    
-    elif machine_state == 2:
-        my_servo.set_duty(state_2_state)
-        my_servo2.set_duty(state_2_state)  # ← Added
-        if time_now[6] - time_last_change[6] >= state_2_time:
-            machine_state = 3
-            time_last_change = rtc.datetime()
-    
-    elif machine_state == 3:
-        my_servo.set_duty(state_3_state)
-        my_servo2.set_duty(state_3_state)  # ← Added
-        if time_now[6] - time_last_change[6] >= state_3_time:
-            machine_state = 4
-            time_last_change = rtc.datetime()
-    
-    elif machine_state == 4:
-        my_servo.set_duty(state_4_state)
-        my_servo2.set_duty(state_4_state)  # ← Added
-        if time_now[6] - time_last_change[6] >= state_4_time:
-            time_last_change = rtc.datetime()
-            machine_state = 1
+    def stop_movement(self):
+        self.l_servo.set_duty(self._stop[0])
+        self.r_servo.set_duty(self._stop[1])
+
+# Example duty values (adjust based on your servo calibration)
+forward = (1600, 1400)
+left = (1500, 1400)
+right = (1600, 1500)
+reverse = (1400, 1600)
+stop = (1500, 1500)
+
+# Create movement controller
+movement = ServoMovement(l_servo, r_servo, forward, left, right, reverse, stop)
+
+# Example usage
+movement.move_forward()
