@@ -17,7 +17,7 @@ buzzer = Audio_Notification(27, False)
 traffic = TrafficLightSubsystem(red_light, amber_light, green_light, True)
 pedestrian = PedestrianSubsystem(p_red_light, p_green_light, button, buzzer, True)
 
-def Traffic_Subsystem_Driver():
+def Traffic_Subsystxem_Driver():
     print("Traffic light subsystem test")
     print("testing traffic light in 5 seconds")
     sleep(5)
