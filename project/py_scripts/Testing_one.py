@@ -1,61 +1,45 @@
-from machine import Pin, PWM, RTC
-from servo import Servo
-import time
+from servomove import ServoMove
+from time import sleep_ms
+from machine import Pin, PWM  
 
-# Create PWM servo controllers for both wheels
-servo_pwm = PWM(Pin(16))  # Right wheel
-servo_pwm2 = PWM(Pin(15)) # Left wheel
-rtc = RTC()
 
-# Servo parameters
-freq = 50
-min_us = 500
-max_us = 2500
-dead_zone_us = 1500
+left_servo = PWM(Pin(16))   # Replace with actual pin number
+right_servo = PWM(Pin(15))  # Replace with actual pin number
 
-# Create servo objects
-my_servo = Servo(pwm=servo_pwm, min_us=min_us, max_us=max_us, dead_zone_us=dead_zone_us, freq=freq)
-my_servo2 = Servo(pwm=servo_pwm2, min_us=min_us, max_us=max_us, dead_zone_us=dead_zone_us, freq=freq)
 
-# State machine setup
-time_last_change = rtc.datetime()
-machine_state = 1
+left_servo.freq(50)
+right_servo.freq(50)
 
-# Define states: duration in seconds and servo pulse width
-states = [
-    {"duration": 3, "position": 500},   # Slow turn
-    {"duration": 6, "position": 1000},  # Medium turn
-    {"duration": 9, "position": 1500},  # Neutral (stop)
-    {"duration": 12, "position": 2000}, # Fast turn
-]
+
+forward = (1600, 1400)
+left = (1500, 1400)
+right = (1600, 1500)
+reverse = (1400, 1600)
+stop = (1500, 1500)
+
+
+movement = ServoMove(
+    left_servo,
+    right_servo,
+    forward,
+    left,
+    right,
+    reverse,
+    stop
+)
 
 while True:
-    time_now = rtc.datetime()
+    movement.move_forward()
+    sleep_ms(1000)
 
-    if machine_state == 1:
-        my_servo.set_duty(state_1_state)
-        my_servo2.set_duty(state_1_state)  # ← Added
-        if time_now[6] - time_last_change[6] >= state_1_time:
-            machine_state = 2
-            time_last_change = rtc.datetime()  # ← Also add this
-    
-    elif machine_state == 2:
-        my_servo.set_duty(state_2_state)
-        my_servo2.set_duty(state_2_state)  # ← Added
-        if time_now[6] - time_last_change[6] >= state_2_time:
-            machine_state = 3
-            time_last_change = rtc.datetime()
-    
-    elif machine_state == 3:
-        my_servo.set_duty(state_3_state)
-        my_servo2.set_duty(state_3_state)  # ← Added
-        if time_now[6] - time_last_change[6] >= state_3_time:
-            machine_state = 4
-            time_last_change = rtc.datetime()
-    
-    elif machine_state == 4:
-        my_servo.set_duty(state_4_state)
-        my_servo2.set_duty(state_4_state)  # ← Added
-        if time_now[6] - time_last_change[6] >= state_4_time:
-            time_last_change = rtc.datetime()
-            machine_state = 1
+    movement.turn_left()
+    sleep_ms(1000)
+
+    movement.turn_right()
+    sleep_ms(1000)
+
+    movement.move_reverse()
+    sleep_ms(1000)
+
+    movement.stop_movement()
+    sleep_ms(2000)
