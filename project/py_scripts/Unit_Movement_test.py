@@ -1,5 +1,36 @@
-from time import sleep_ms, sleep
-from machine import Pin, PWM
+import sys
+import os
+
+# Add the absolute path to the 'lib' directory
+lib_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../lib'))
+if lib_path not in sys.path:
+    sys.path.insert(0, lib_path)
+
+# Add this at the top of Unit_Movement_test.py for Linux testing only
+try:
+    from machine import Pin, PWM
+except ImportError:
+    class Pin:
+        IN = 0
+        PULL_UP = 0
+        def __init__(self, pin, *a, **kw): pass
+        def irq(self, *a, **kw): pass
+
+    class PWM:
+        def __init__(self, pin): pass
+        def freq(self, f): pass
+        def duty_ns(self, ns): pass
+        def deinit(self): pass
+
+try:
+    from servo import Servo
+except ImportError:
+    class Servo:
+        def __init__(self, *a, **kw): pass
+        def set_duty(self, v): print(f"Servo set_duty({v})")
+
+
+from time import sleep
 from servo import Servo
 
 class ServoMove:
@@ -47,6 +78,8 @@ movement = ServoMove(
 
 while True:
     movement.left()
+    print(1)
     sleep(1)
+    print(2)
     movement.stop()
     sleep(1)
