@@ -1,24 +1,4 @@
-try:
-    from machine import Pin, PWM
-except ImportError:
-    class Pin:
-        IN = 0
-        PULL_UP = 0
-        def __init__(self, pin, *a, **kw): pass
-        def irq(self, *a, **kw): pass
-
-    class PWM:
-        def __init__(self, pin): pass
-        def freq(self, f): pass
-        def duty_ns(self, ns): pass
-        def deinit(self): pass
-
-try:
-    from servo import Servo
-except ImportError:
-    class Servo:
-        def __init__(self, *a, **kw): pass
-        def set_duty(self, v): print(f"Servo set_duty({v})")
+from machine import PWM
 
 
 class Servo:
