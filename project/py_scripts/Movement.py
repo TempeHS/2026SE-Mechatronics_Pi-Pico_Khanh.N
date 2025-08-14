@@ -29,3 +29,4 @@ class ServoMove:
     def stop(self):
         self.my_servo.set_duty(self._stop)
         self.my_servo2.set_duty(self._stop)
+
