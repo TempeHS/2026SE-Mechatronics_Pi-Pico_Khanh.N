@@ -4,7 +4,7 @@ from machine import Pin
 
 
 # File name of the script to import
-file_name = "v01"
+file_name = "v03"
 
 # Add the path to the sys.path
 sys.path.append("/py_scripts")
@@ -82,5 +82,4 @@ except RuntimeError as e:
     print("This is a runtime catch all error.")
     print("You may want to check the error code or take this error to your teacher.")
     print("--- Traceback ---")
-    sys.print_exception(e)
     sys.print_exception(e)
