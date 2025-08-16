@@ -2,16 +2,6 @@ from machine import Pin, PWM
 from servo import Servo
 from time import sleep
 
-<<<<<<< HEAD
-class ServoMove:
-    def __init__(self, my_servo, my_servo2):
-        self.my_servo = my_servo
-        self.my_servo2 = my_servo2
-
-    def moveforward(self):
-        self.my_servo.set_duty(500)
-        self.my_servo2.set_duty(2500)
-=======
 servo_pwm_left = PWM(Pin(16))
 servo_pwm_right = PWM(Pin(15))
 freq = 50
@@ -49,27 +39,3 @@ class ServoMovement:
     def stop(self):
         left_servo.set_duty(self.__stop[0])#1500
         right_servo.set_duty(self.__stop[1])#1500
-
-# maybe delete ???
-servo_moves = ServoMovement(
-    forward=(1600, 1400),
-    left=(1400, 1400),
-    right=(1600, 1600),
-    reverse=(1400, 1600),
-    stop=(1500, 1500)
-)
-while True:
-    servo_moves.forward()
-    sleep(2)
-
-    servo_moves.left()
-    sleep(1)
-
-    servo_moves.reverse()
-    sleep(2)
-
-    servo_moves.stop()
-    #sleep(1)  ## can remove that so it just stop 
-
-### if that doesnt work can put the values straight in
->>>>>>> 4f5ddb33fce93c5b73072002825321f2c8cc44bf

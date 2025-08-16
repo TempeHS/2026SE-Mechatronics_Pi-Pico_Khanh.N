@@ -1,6 +1,6 @@
 from machine import Pin, PWM
 from servo import Servo
-from Movement import ServoMovement
+from movement import ServoMovement
 from time import sleep
 
 servo_pwm_left = PWM(Pin(16))
