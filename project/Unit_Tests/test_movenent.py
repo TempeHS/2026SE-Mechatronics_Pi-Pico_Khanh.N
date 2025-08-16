@@ -1,7 +1,5 @@
 from time import sleep
-from movement import ServoMovement
-
-movement = ServoMovement
+from movement import movement
 
 print("Starting simple movement test...")
 sleep(2)
