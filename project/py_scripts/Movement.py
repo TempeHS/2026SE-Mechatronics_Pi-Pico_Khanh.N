@@ -4,10 +4,11 @@ from time import sleep
 
 servo_pwm_left = PWM(Pin(16))
 servo_pwm_right = PWM(Pin(15))
+
 freq = 50
 min_us = 500
 max_us = 2500
-dead_zone_us = 1500
+dead_zone_us = 1500  # this is the stop 
 
 left_servo = Servo(pwm=servo_pwm_left, min_us=min_us, max_us=max_us, dead_zone_us=dead_zone_us, freq=freq)
 right_servo = Servo(pwm=servo_pwm_right, min_us=min_us, max_us=max_us, dead_zone_us=dead_zone_us, freq=freq)
@@ -20,22 +21,30 @@ class ServoMovement:
         self.__reverse = reverse
         self.__stop = stop
 
-    def forward(self):
-        left_servo.set_duty(self.__forward[0])#1600
-        right_servo.set_duty(self.__forward[1])#1400
-    
-    def left(self):
-        left_servo.set_duty(self.__left[0])#1400
-        right_servo.set_duty(self.__left[1])#1400
+    def move_forward(self):
+        left_servo.set_duty(self.__forward)
+        right_servo.set_duty(self.__reverse)
 
-    def right(self):
-        left_servo.set_duty(self.__right[0])#1600
-        right_servo.set_duty(self.__right[1])#1600
+    def move_backward(self):
+        left_servo.set_duty(self.__reverse)
+        right_servo.set_duty(self.__forward)
 
-    def reverse(self):
-        left_servo.set_duty(self.__reverse[0])#1400
-        right_servo.set_duty(self.__reverse[1])#1600
+    def turn_left(self):
+        left_servo.set_duty(self.__reverse)
+        right_servo.set_duty(self.__reverse)
+
+    def turn_right(self):
+        left_servo.set_duty(self.__forward)        
+        right_servo.set_duty(self.__forward)    
 
     def stop(self):
-        left_servo.set_duty(self.__stop[0])#1500
-        right_servo.set_duty(self.__stop[1])#1500
+        left_servo.set_duty(self.__stop)
+        right_servo.set_duty(self.__stop)
+
+movement = ServoMovement(
+    forward=1600,   
+    left=1300,     
+    right=1700,     
+    reverse=1400,   
+    stop=1500      
+)
