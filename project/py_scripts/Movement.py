@@ -22,20 +22,20 @@ class ServoMovement:
         self.__stop = stop
 
     def move_forward(self):
-        left_servo.set_duty(1600)
-        right_servo.set_duty(1600)
+        left_servo.set_duty(2000)
+        right_servo.set_duty(1000)
 
     def move_backward(self):
-        left_servo.set_duty(1400)
-        right_servo.set_duty(1400)
+        left_servo.set_duty(1000)
+        right_servo.set_duty(2000)
 
     def turn_left(self):
-        left_servo.set_duty(1400)
-        right_servo.set_duty(1600)
+        left_servo.set_duty(1500)
+        right_servo.set_duty(1000)
 
     def turn_right(self):
-        left_servo.set_duty(1600)        
-        right_servo.set_duty(1400)    
+        left_servo.set_duty(2000)        
+        right_servo.set_duty(1500)    
 
     def stop(self):
         left_servo.set_duty(1500)
