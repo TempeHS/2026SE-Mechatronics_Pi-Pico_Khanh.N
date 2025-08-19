@@ -1,10 +1,8 @@
-from py_scripts.colorsensor import ColourSensor
-from PiicoDev_VEML6040 import PiicoDev_VEML6040
+from colorsensor import Colour_Sensor
 
+sensor = Colour_Sensor(debug=False)
 
-sensor = PiicoDev_VEML6040()
-cs = ColourSensor(sensor, debug=True)
-
-while True:
-    rgb = cs.sensecolour()
-    print(f'rgb: {rgb}')
+while True: 
+    result = sensor.check_colour()
+    print(result)
+    sleep(0.5)
