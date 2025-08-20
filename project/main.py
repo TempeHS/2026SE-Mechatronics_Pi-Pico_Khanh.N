@@ -4,7 +4,7 @@ from machine import Pin
 
 
 # File name of the script to import
-file_name = "colorsensor_unittest"
+file_name = "Main_Robot_code"
 
 # Add the path to the sys.path
 sys.path.append("/py_scripts")
